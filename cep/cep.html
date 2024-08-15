@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />    <title>Consulta de CEP</title>
+    <link rel="stylesheet" href="cep.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1 id="consulta">sitecorreios</h1>
+            <ul id="listas">
+                <li> <a href="https://rastreamento.correios.com.br/app/index.php">Rastreamento de Objetos</a></li>
+                <li> <a href="https://www.correios.com.br/"> Link Correios</a></li>
+                <li> <a href="https://buscacepinter.correios.com.br/app/endereco/index.php">Busca CEP</a></li>
+                <li> <a href="https://www.correios.com.br/acesso-a-informacao">Sobre</a></li>
+                <li> <a href="https://www.correios.com.br/acesso-a-informacao/perguntas-frequentes">FAQ</a></li>
+            </ul>
+        </div>
+
+        <span id="icone" class="material-symbols-outlined">
+                location_on
+                </span>
+
+    </header>
+
+    <div class="container-amarelo">
+        <h4>Busque outro CEP</h4>
+        <input type="text" id="cepInput" placeholder="Digite o CEP...">
+        <button onclick="buscarEndereco()">BUSCAR CEP</button>
+    </div>
+
+    <div id="cep">
+    <div id="endereco"></div>
+    </div>
+    
+    <script>
+        function buscarEndereco() {
+            var  cep = document.getElementById('cepInput').value;
+            var url = `https://viacep.com.br/ws/${cep}/json/`;
+            
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if(data.erro) {
+                    document.getElementById('endereco').innerText = "CEP não encontrado.";
+                } else {
+                    var endereco = `CEP: ${data.cep}, ${data.logradouro}, ${data.bairro}, ${data.localidade}, ${data.uf}`;
+                    document.getElementById('endereco').innerText = endereco;
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+        }
+    </script>
+</body>
+</html>
